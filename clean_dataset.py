@@ -4,19 +4,17 @@ from pathlib import Path
 import uuid
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from tqdm import tqdm
+from ultralytics import YOLO
 
-# Load Face Detector (once, outside thread)
-FACE_MODEL = {
-    "proto": "face_detector/deploy.prototxt",
-    "weights": "face_detector/res10_300x300_ssd_iter_140000_fp16.caffemodel"
-}
-face_net = cv2.dnn.readNetFromCaffe(FACE_MODEL["proto"], FACE_MODEL["weights"])
+# === Load YOLOv8n-face model once ===
+print("🔍 Loading YOLOv8n-face model...")
+face_model = YOLO("yolov8n-face.pt")
 
-# Configs
+# === Configs ===
 DATASET_DIR = "dataset"
 CLEANED_DIR = "cleaned"
-CONF_THRESHOLD = 0.7
-MAX_THREADS_PER_FOLDER = 10
+CONF_THRESHOLD = 0.5
+MAX_THREADS_PER_FOLDER = 3
 
 def process_image(img_path, output_folder):
     filename = os.path.basename(img_path)
@@ -25,31 +23,28 @@ def process_image(img_path, output_folder):
         return f"❌ Failed to load {filename}"
 
     h, w = img.shape[:2]
-    blob = cv2.dnn.blobFromImage(img, 1.0, (300, 300),
-                                 (104.0, 177.0, 123.0), swapRB=False)
-    face_net.setInput(blob)
-    detections = face_net.forward()
+    results = face_model(img, imgsz=640, conf=CONF_THRESHOLD, verbose=False)[0]
 
-    for i in range(detections.shape[2]):
-        confidence = detections[0, 0, i, 2]
-        if confidence >= CONF_THRESHOLD:
-            box = detections[0, 0, i, 3:7] * [w, h, w, h]
-            (x1, y1, x2, y2) = box.astype("int")
+    face_count = 0
 
-            # Clamp to image bounds
-            x1, y1 = max(0, x1), max(0, y1)
-            x2, y2 = min(w, x2), min(h, y2)
+    for box in results.boxes:
+        x1, y1, x2, y2 = map(int, box.xyxy[0])
+        x1, y1 = max(x1, 0), max(y1, 0)
+        x2, y2 = min(x2, w), min(y2, h)
 
-            if x2 - x1 <= 0 or y2 - y1 <= 0:
-                continue
+        if x2 - x1 <= 0 or y2 - y1 <= 0:
+            continue
 
-            face = img[y1:y2, x1:x2]
-            gray_face = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
-            output_path = os.path.join(output_folder, f"{uuid.uuid4().hex}.jpg")
-            cv2.imwrite(output_path, gray_face)
-            return f"✅ Processed: {filename}"
+        face = img[y1:y2, x1:x2]
+        if face.size == 0:
+            continue
 
-    return f"⚠️ No face detected: {filename}"
+        gray_face = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
+        output_path = os.path.join(output_folder, f"{uuid.uuid4().hex}.jpg")
+        cv2.imwrite(output_path, gray_face)
+        face_count += 1
+
+    return f"✅ {face_count} face(s) from {filename}" if face_count > 0 else f"⚠️ No face detected: {filename}"
 
 
 def process_folder(category):
@@ -64,8 +59,7 @@ def process_folder(category):
         futures = {executor.submit(process_image, img_path, output_folder): img_path for img_path in image_files}
 
         for future in tqdm(as_completed(futures), total=len(image_files), desc=f"[{category.upper()}] Processing"):
-            result = future.result()
-            results.append(result)
+            results.append(future.result())
 
     for res in results:
         print(res)
