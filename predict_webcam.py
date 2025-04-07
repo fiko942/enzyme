@@ -1,3 +1,14 @@
+"""
+File: predict_webcam.py
+Author: Wiji Fiko Teren
+Email: tobellord@gmail.com
+
+Description:
+Real-time gender prediction using webcam feed.
+Uses the trained CNN model to classify gender from detected face frames.
+"""
+
+
 import cv2
 import numpy as np
 from tensorflow.keras.models import load_model

@@ -1,3 +1,14 @@
+"""
+File: predict_video.py
+Author: Wiji Fiko Teren
+Email: tobellord@gmail.com
+
+Description:
+Perform gender classification from video input using the trained model.
+Processes each frame, predicts gender, and displays result in real-time.
+"""
+
+
 import cv2
 import numpy as np
 from ultralytics import YOLO

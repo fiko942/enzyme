@@ -1,3 +1,14 @@
+"""
+File: trainer.py
+Author: Wiji Fiko Teren
+Email: tobellord@gmail.com
+
+Description:
+Train a Convolutional Neural Network (CNN) model to classify gender
+from preprocessed grayscale face images. The trained model is saved as 'model.h5'.
+"""
+
+
 import tensorflow as tf
 from tensorflow.keras import layers, models, callbacks
 from tensorflow.keras.preprocessing.image import ImageDataGenerator

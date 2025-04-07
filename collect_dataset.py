@@ -1,3 +1,14 @@
+"""
+File: collect_dataset.py
+Author: Wiji Fiko Teren
+Email: tobellord@gmail.com
+
+Description:
+Capture images using webcam and categorize them as 'male' or 'female'.
+The collected images are saved into the 'dataset/' directory for further processing.
+"""
+
+
 import cv2
 import os
 import uuid

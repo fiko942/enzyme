@@ -1,3 +1,15 @@
+"""
+File: clean_dataset.py
+Author: Wiji Fiko Teren
+Email: tobellord@gmail.com
+
+Description:
+Process raw dataset images using YOLOv8n-face to detect faces, crop them,
+convert to grayscale, and save the cleaned images into the 'cleaned/' directory.
+Uses multithreading for concurrent processing.
+"""
+
+
 import cv2
 import os
 from pathlib import Path

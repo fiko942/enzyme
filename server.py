@@ -1,3 +1,14 @@
+"""
+File: server.py
+Author: Wiji Fiko Teren
+Email: tobellord@gmail.com
+
+Description:
+Flask-based web API that exposes a /predict endpoint to accept image uploads
+and return predicted gender using the trained model.
+"""
+
+
 from flask import Flask, request, jsonify
 import cv2
 import numpy as np

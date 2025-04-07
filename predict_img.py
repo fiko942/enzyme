@@ -1,3 +1,14 @@
+"""
+File: predict_img.py
+Author: Wiji Fiko Teren
+Email: tobellord@gmail.com
+
+Description:
+Use the trained CNN model to predict gender from a single image input.
+Accepts image path, loads the model, and prints the prediction result.
+"""
+
+
 import cv2
 import numpy as np
 from ultralytics import YOLO
