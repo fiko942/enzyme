@@ -7,35 +7,138 @@
 
 ---
 
+
+# Gender Classification from Face Images
+
+A machine learning project to classify gender (Male/Female) from face images using deep learning and computer vision. The system includes data collection, preprocessing using YOLOv8n-face, CNN training, prediction, and API deployment.
+
+---
+
+## 📁 Project Structure
+
+```
+project-root/
+├── collect_dataset.py        # Collect raw face dataset via webcam
+├── clean_dataset.py          # Clean dataset using YOLOv8n-face (grayscale, cropped faces)
+├── trainer.py                # Train CNN model with cleaned dataset
+├── predict_img.py            # Predict gender from a single image
+├── predict_video.py          # Predict gender from video
+├── predict_webcam.py         # Real-time gender prediction via webcam
+├── server.py                 # Flask API for prediction
+│
+├── dataset/                  # Raw images
+│   ├── male/
+│   └── female/
+│
+├── cleaned/                  # Preprocessed (cropped + grayscale)
+│   ├── male/
+│   └── female/
+```
+
+---
+
 ## 🧠 Workflow Overview
 
-1. **Data Collection**
-   - Run `collect_dataset.py` to capture images using webcam.
-   - Images are stored in `dataset/male` or `dataset/female`.
+### 1. 📸 Data Collection
+Use webcam to collect images categorized into `male` or `female`:
 
-2. **Data Cleaning**
-   - Run `clean_dataset.py` to:
-     - Detect face using Haar Cascade
-     - Crop the face region
-     - Convert to grayscale
-     - Save to `cleaned/` directory
+```bash
+python collect_dataset.py
+```
 
-3. **Training**
-   - Run `trainer.py` to train a CNN model using data from `cleaned/`.
-   - Model will be saved as `model.h5`.
+Images are saved under the `dataset/` directory.
 
-4. **Prediction**
-   - Use `predict_img.py` for single image prediction.
-   - Use `predict_video.py` for video files.
-   - Use `predict_webcam.py` for real-time webcam predictions.
+---
 
-5. **API Deployment**
-   - Run `server.py` to start a Flask API server.
-   - Endpoint `/predict` accepts image uploads and returns predicted class.
+### 2. 🧼 Dataset Cleaning with YOLOv8n-face
+Detect and crop faces using **Ultralytics YOLOv8n-face**, convert to grayscale, and save:
 
+```bash
+python clean_dataset.py
+```
 
-## 🚀 How to Run
+- Uses **YOLOv8n-face** (`yolov8n-face.pt`)
+- Crops faces from images and saves grayscale versions
+- Processes multiple categories and images concurrently with multithreading
+- Cleaned images are saved in `cleaned/`
 
-1. Install requirements:
-   ```bash
-   pip install -r requirements.txt
+---
+
+### 3. 🧠 Training the Model
+Train a CNN model to classify gender based on the cleaned face dataset:
+
+```bash
+python trainer.py
+```
+
+Model will be saved as `model.h5`.
+
+---
+
+### 4. 🔍 Prediction
+Predict gender using the trained model:
+
+- From image:
+  ```bash
+  python predict_img.py
+  ```
+- From video:
+  ```bash
+  python predict_video.py
+  ```
+- From webcam:
+  ```bash
+  python predict_webcam.py
+  ```
+
+---
+
+### 5. 🌐 API Server
+Start the Flask server for remote prediction:
+
+```bash
+python server.py
+```
+
+**Endpoint:**
+- `POST /predict` – Accepts image uploads, returns predicted gender.
+
+---
+
+## ⚙️ Requirements
+
+Install all dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Libraries used:
+- `opencv-python`
+- `ultralytics`
+- `tqdm`
+- `flask`
+- `tensorflow` or `keras`
+
+---
+
+## 📦 Notes
+
+- YOLOv8n-face model file (`yolov8n-face.pt`) must be available in the same directory or specify the correct path in `clean_dataset.py`.
+- The system uses multithreading to speed up image preprocessing.
+- Supports `.jpg`, `.jpeg`, `.png` images.
+
+---
+
+## 🚀 Future Ideas
+
+- Add face alignment and augmentation
+- Improve training model using pretrained CNN (e.g., MobileNetV2)
+- Add web frontend using Streamlit or Gradio
+- Support more gender/age classification categories
+
+---
+
+## 🪪 License
+
+MIT License — use freely for learning and development.
