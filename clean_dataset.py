@@ -26,7 +26,7 @@ face_model = YOLO("yolov8n-face.pt")
 DATASET_DIR = "dataset"
 CLEANED_DIR = "cleaned"
 CONF_THRESHOLD = 0.5
-MAX_THREADS_PER_FOLDER = 3
+MAX_THREADS_PER_FOLDER = 5
 
 def process_image(img_path, output_folder):
     filename = os.path.basename(img_path)

@@ -16,7 +16,7 @@ A machine learning project to classify gender (Male/Female) from face images usi
 ## 📁 Project Structure
 
 ```
-project-root/
+/
 ├── collect_dataset.py        # Collect raw face dataset via webcam
 ├── clean_dataset.py          # Clean dataset using YOLOv8n-face (grayscale, cropped faces)
 ├── trainer.py                # Train CNN model with cleaned dataset
@@ -70,7 +70,7 @@ Train a CNN model to classify gender based on the cleaned face dataset:
 python trainer.py
 ```
 
-Model will be saved as `model.h5`.
+Model will be saved as `enzyme_model.h5`.
 
 ---
 
