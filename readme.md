@@ -1,12 +1,11 @@
+
 # ENZYME
 ## The Open-Source Engine for Adaptive AI.
 ### Enzyme is an open-source machine learning model designed for flexibility, transparency, and experimentation. Whether you're training on custom datasets, fine-tuning existing logic, or exploring new frontiers in AI, ENZYME provides a fully modifiable Python-based framework.
 
 ### Ideal for researchers, developers, and curious minds - with ENZYME, you don't just use the model, you make it your own.
 
-
 ---
-
 
 # Gender Classification from Face Images
 
@@ -136,6 +135,18 @@ Libraries used:
 - Improve training model using pretrained CNN (e.g., MobileNetV2)
 - Add web frontend using Streamlit or Gradio
 - Support more gender/age classification categories
+
+---
+
+## 👤 Author Info
+
+<img src="https://avatars.githubusercontent.com/u/84434815" width="100" alt="Wiji Fiko Teren" />
+
+**Wiji Fiko Teren**  
+🌐 [wijifikoteren.streampeg.com](https://wijifikoteren.streampeg.com)  
+📧 Email: [tobellord@gmail.com](mailto:tobellord@gmail.com) / [wijifikoteren@streampeg.com](mailto:wijifikoteren@streampeg.com)  
+📺 YouTube: [@wijifikoteren](https://www.youtube.com/@wijifikoteren)  
+☕ Donate: [PayPal - paypal.me/wijifikoteren](http://paypal.me/wijifikoteren)
 
 ---
 
