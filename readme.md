@@ -129,15 +129,6 @@ Libraries used:
 
 ---
 
-## 🚀 Future Ideas
-
-- Add face alignment and augmentation
-- Improve training model using pretrained CNN (e.g., MobileNetV2)
-- Add web frontend using Streamlit or Gradio
-- Support more gender/age classification categories
-
----
-
 ## 👤 Author Info
 
 <img src="https://avatars.githubusercontent.com/u/84434815" width="100" alt="Wiji Fiko Teren" />
